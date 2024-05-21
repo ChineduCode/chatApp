@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import errorDisplay from '../errorDisplay'
 
@@ -7,6 +7,13 @@ const LoginPage = ({ socket, onSelectUsername }) => {
     const [error, setError] = useState(null)
 
     const navigate = useNavigate()
+
+    useEffect(()=> {
+        const loggedIn = !!(localStorage.getItem('userID') && localStorage.getItem('username'))
+        if(loggedIn){
+            navigate('/chats')
+        }
+    })
     
     //Handle from Submit
     const handleLogin = async (e)=> {
@@ -37,6 +44,7 @@ const LoginPage = ({ socket, onSelectUsername }) => {
             return
         }
     }
+
 
     return(
         <form className="login" onSubmit={handleLogin}>

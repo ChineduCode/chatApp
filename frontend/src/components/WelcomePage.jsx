@@ -1,6 +1,17 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useEffect } from  'react'
 
 const WelcomePage = () => {
+
+    const navigate = useNavigate()
+
+    useEffect(()=> {
+        const loggedIn = !!(localStorage.getItem('userID') && localStorage.getItem('username'))
+        if(loggedIn){
+            navigate('/chats')
+        }
+    })
+
     return(
         <div className="welcome">
             <div className="container">  
