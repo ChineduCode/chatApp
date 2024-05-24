@@ -15,7 +15,7 @@ const RegisterPage = () => {
         e.preventDefault()
 
         try {
-            const response = await fetch(`${process.env.SERVER_URL}/api/users/register`, {
+            const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/users/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

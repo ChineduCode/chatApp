@@ -12,12 +12,19 @@ require('dotenv').config()
 connectDB()
 
 const app = express()
+// Middleware to handle errors
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
+
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
+
 //routes
-app.use('/api/users', require('./Routes/userRouter'))
+app.use('/api/users', require('./routes/userRouter'))
 
 app.get('/', (req, res)=> res.send('Hello world'))
 
@@ -43,6 +50,7 @@ io.use( async (socket, next)=> {
         if (user) {
             socket.userID = userID;
             socket.username = username;
+            socket.connected = true
             return next();
         }
 
@@ -54,6 +62,7 @@ io.use( async (socket, next)=> {
 
         socket.userID = user.id;
         socket.username = username;
+        socket.connected = true
         next()
 
     }catch(error){
@@ -65,75 +74,85 @@ io.use( async (socket, next)=> {
 
 
 io.on('connection', async (socket)=> {
-    console.log(`User connected`, socket.username)
-    socket.emit('session', {
-        userID: socket.userID,
-        username: socket.username
-    })
+    try {
 
-    socket.join(socket.userID)
+        console.log(`User connected`, socket.username)
+        socket.emit('session', {
+            userID: socket.userID,
+            username: socket.username
+        })
     
-    const users = await User.find({}, {__v: 0, password: 0, createdAt: 0, updatedAt: 0})
-    socket.emit('users', users)
-
-    //Private message
-    // forward the private message to the right recipient (and to other tabs of the sender)
-    socket.on("private message", async ({ content, to }) => {
-        const from = socket.userID
-        const message = {
-            content,
-            from,
-            to,
-            timestamp: new Date()
-        }
-
-        socket.to(to).to(socket.userID).emit("private message", message);
-
-        const newMessage = new Message(message)
-        await newMessage.save()
-
-        //Create chat for the message
-        let chat = await Chat.findOne({
-            participants: { $all: [from, to] }
+        socket.join(socket.userID)
+    
+        let users = []
+        users = await User.find({}, {__v: 0, password: 0, createdAt: 0, updatedAt: 0})
+        socket.emit('users', users)
+    
+        //Private message
+        // forward the private message to the right recipient (and to other tabs of the sender)
+        socket.on("private message", async ({ content, to }) => {
+            const from = socket.userID
+            const message = {
+                content,
+                from,
+                to,
+                timestamp: new Date()
+            }
+    
+            socket.to(to).to(socket.userID).emit("private message", message);
+    
+            const newMessage = new Message(message)
+            await newMessage.save()
+    
+            //Create chat for the message
+            let chat = await Chat.findOne({
+                participants: { $all: [from, to] }
+            })
+     
+            if(!chat){
+                chat = new Chat({
+                    participants: [from, to],
+                });
+            }
+            
+            chat.lastMessage = newMessage._id,
+            chat.lastUpdated = newMessage.timestamp
+            //console.log(chat)
+    
+            await chat.save()
+            
+        });
+    
+        socket.on("getMessages", async ()=> {
+            const messages = await Message.find({
+                $or: [
+                    { from: socket.userID },
+                    { to: socket.userID }
+                ]
+            })
+    
+            socket.emit("messages", messages)
         })
-
-        if(!chat){
-            chat = new Chat({
-                participants: [from, to],
-            });
-        }
+    
+        socket.on("getChats", async ()=> {
+            const chats = await Chat.find({
+                participants: socket.userID
+            })
+            .populate({
+                path: 'lastMessage',
+                populate: { path: 'from to', select: 'username' }
+            })
+            .populate('participants', 'username');
+    
+            socket.emit("chats", chats)
+        })
+    
+        socket.emit("user connected", ()=> {
+        })
         
-        chat.lastMessage = newMessage._id,
-        chat.lastUpdated = newMessage.timestamp
-        //console.log(chat)
-
-        await chat.save()
-        
-    });
-
-    socket.on("getMessages", async ()=> {
-        const messages = await Message.find({
-            $or: [
-                { from: socket.userID },
-                { to: socket.userID }
-            ]
-        })
-
-        socket.emit("messages", messages)
-    })
-
-    socket.on("getChats", async ()=> {
-        const chats = await Chat.find({
-            participants: socket.userID
-        })
-        .populate({
-            path: 'lastMessage',
-            populate: { path: 'from to', select: 'username' }
-        })
-        .populate('participants', 'username');
-
-        socket.emit("chats", chats)
-    })
+    } catch (error) {
+        console.log(error.message)
+    }
 })
 
 const PORT = process.env.PORT;

@@ -20,7 +20,7 @@ const LoginPage = ({ socket, onSelectUsername }) => {
         e.preventDefault()
 
         try{
-            const response = await fetch(`${process.env.SERVER_URL}/api/users/login`, {
+            const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/users/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'Application/json'

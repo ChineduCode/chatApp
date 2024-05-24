@@ -14,6 +14,7 @@ import CallsPage from './components/CallsPage'
 const App = ()=> {
     const [updatedUsers, setUpdatedUsers] = useState([])
     const [chats, setChats] = useState([]);
+    let [userConnected, setUserConnected] = useState(false)
 
     const onSelectUsername = (data)=> {
         const username = data.username
@@ -36,6 +37,14 @@ const App = ()=> {
             localStorage.setItem("username", username)
             socket.userID = userID
             socket.username = username
+        })
+
+        //console.log(socket.connected)
+
+        socket.on("user connected", ({connected})=> {
+
+            //socket.connected = connected
+            setUserConnected(connected)
         })
 
         // Emit the event to get chats
@@ -72,7 +81,7 @@ const App = ()=> {
                     setUpdatedUsers(prevUsers => {
                         const updatedUsers = [...prevUsers];
                         user.self = user._id === socket.userID;
-                        //user.userID = socket.userID
+
                         initReactiveProperties(user);
                         updatedUsers.push(user);
     
@@ -109,10 +118,11 @@ const App = ()=> {
 
         return ()=> {
             socket.off('session')
+            socket.off('user connected')
             socket.off('chats')
             socket.off('users')
         }
-    })
+    }, [setChats, setUpdatedUsers, updatedUsers, userConnected])
 
 
     return(

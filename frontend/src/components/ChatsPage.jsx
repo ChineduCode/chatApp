@@ -8,53 +8,33 @@ import { LiaCheckDoubleSolid } from "react-icons/lia";
 import { Link } from 'react-router-dom'
 
 const ChatsPage = ({ chats }) => {
-    // const [chats, setChats] = useState([]);
+    
+    //const [chats, setChats] = useState([]);
+
+    //const navigate = useNavigate()
 
     // useEffect(() => {
+    //     const userID = localStorage.getItem('userID')
+    //     const username = localStorage.getItem('username')
+
+    //     if(userID && username){
+    //         console.log(userID, username)
+    //         socket.auth = { username, userID }
+    //         socket.connect()
+    //     }else{
+    //         navigate('/login')
+    //     }
+
+    //     // socket.on('session', ({ userID, username })=> {
+    //     //     socket.auth = { userID, username }
+    //     //     localStorage.setItem("userID", userID)
+    //     //     localStorage.setItem("username", username)
+    //     //     socket.userID = userID
+    //     //     socket.username = username
+    //     // })
+
     //     // Emit the event to get chats
     //     socket.emit('getChats');
-
-    //     // Listen for the messages event
-    //     // socket.on('messages', (messages) => {
-    //     //     const userID = socket.userID;
-    //     //     const chatMap = new Map();
-
-    //     //     messages.forEach(message => {
-    //     //         const chatKey = [message.from._id, message.to._id].sort().join('-');
-    //     //         if (!chatMap.has(chatKey)) {
-    //     //             chatMap.set(chatKey, {
-    //     //                 participants: [],
-    //     //                 messages: []
-    //     //             });
-    //     //         }
-
-    //     //         // Add participants
-    //     //         if (!chatMap.get(chatKey).participants.find(participant => participant._id === message.from._id)) {
-    //     //             chatMap.get(chatKey).participants.push(message.from);
-    //     //         }
-    //     //         if (!chatMap.get(chatKey).participants.find(participant => participant._id === message.to._id)) {
-    //     //             chatMap.get(chatKey).participants.push(message.to);
-    //     //         }
-
-    //     //         // Label the message and add it to the chat
-    //     //         const labeledMessage = {
-    //     //             ...message,
-    //     //             label: message.from._id === userID ? 'sent' : 'received'
-    //     //         };
-    //     //         chatMap.get(chatKey).messages.push(labeledMessage);
-    //     //     });
-
-    //     //     // Convert the map to an array and sort chats by the latest message
-    //     //     const chatArray = Array.from(chatMap.values()).map(chat => {
-    //     //         chat.messages.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
-    //     //         chat.lastMessage = chat.messages[chat.messages.length - 1];
-    //     //         return chat;
-    //     //     });
-
-    //     //     chatArray.sort((a, b) => new Date(b.lastMessage.timestamp) - new Date(a.lastMessage.timestamp));
-
-    //     //     setChats(chatArray);
-    //     // });
 
     //     // Clean up the effect
     //     socket.on('chats', (chats)=> {
@@ -78,7 +58,7 @@ const ChatsPage = ({ chats }) => {
     //     return () => {
     //         socket.off('chats');
     //     };
-    // }, [socket]);
+    // }, [socket, navigate, setChats]);
 
     return(
         <>
@@ -103,7 +83,7 @@ const ChatsPage = ({ chats }) => {
                                     </Link>
                                 </div>
                                 <Link to={`/chat/${chat.username}`} className="time-num-of-messages">
-                                    <span className="time"> {new Date(chat.lastUpdated).toLocaleString()} </span>
+                                    <span className="time"> {new Date(chat.lastUpdated).toLocaleTimeString('en-US')} </span>
                                     <span className="num-of-messages">2</span>
                                 </Link>
                             </div>

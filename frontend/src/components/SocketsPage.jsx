@@ -3,7 +3,7 @@ import { MdSearch, MdGroupAdd, MdPersonAddAlt1, MdGroups } from "react-icons/md"
 import { HiMiniEllipsisVertical } from "react-icons/hi2";
 import { FaUser } from 'react-icons/fa6'
 import { Link } from  'react-router-dom'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const SocketsPage = ({socket, users})=> {
     const [search, setSearch] = useState('')
@@ -15,6 +15,7 @@ const SocketsPage = ({socket, users})=> {
         console.log(search)
     }
 
+    useEffect(()=> console.log(users))
 
     return( 
         <section className="sockets">

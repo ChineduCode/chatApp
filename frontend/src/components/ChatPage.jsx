@@ -6,6 +6,11 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import { IoMdArrowDropright } from "react-icons/io";
 import { FaUser } from 'react-icons/fa6'
 import { Link, useParams } from 'react-router-dom'
+//import { Picker } from 'emoji-mart';
+//import 'emoji-mart/css/emoji-mart.css';
+import data from '@emoji-mart/data'
+import Picker from '@emoji-mart/react'
+
 
 const ChatApp = ({socket, users}) => {
     const { username } = useParams()
@@ -15,6 +20,8 @@ const ChatApp = ({socket, users}) => {
     let [textareaActive, setTextareaActive] = useState(false)
     const [messages, setMessages] = useState([])
     const chatContainerRef = useRef(null)
+    //const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    const [showPicker, setShowPicker] = useState(false);
 
     useEffect(()=> {
         const user = users.find(user => user.username.toLowerCase() === username.toLowerCase())
@@ -43,9 +50,9 @@ const ChatApp = ({socket, users}) => {
 
     
     useEffect(()=> {
-        const handlePrivateMessage = ({ content, from }) => {
+        const handlePrivateMessage = ({ content, from, timestamp }) => {
             if(selectedUser && from === selectedUser._id){
-                setMessages(prevMessages => [...prevMessages, {content, fromSelf: false}])
+                setMessages(prevMessages => [...prevMessages, {content, fromSelf: false, timestamp}])
             }
         }
 
@@ -70,6 +77,11 @@ const ChatApp = ({socket, users}) => {
         setTextareaActive(!!text)
     }
 
+    const handleEmojiSelect = (emoji) => {
+        setTextMessage(textMessage + emoji.native); // Add selected emoji to message
+        setShowPicker(false); // Close picker after selection
+    };
+
     const handleMessage = (e) => {
         e.preventDefault();
         if (textMessage.trim() && selectedUser) {
@@ -78,7 +90,13 @@ const ChatApp = ({socket, users}) => {
                 to: selectedUser._id,
             });
 
-            setMessages(prevMessages => [...prevMessages, {content: textMessage, fromSelf: true}])
+            setMessages(prevMessages => [...prevMessages, 
+                {
+                    content: textMessage, 
+                    fromSelf: true, 
+                    timestamp: new Date()
+                }
+            ])
             
             setTextMessage('');
             setTextareaActive(false);
@@ -130,18 +148,33 @@ const ChatApp = ({socket, users}) => {
                         key={index}
                         className={`message ${message.fromSelf ? 'sent' : 'received'}`}
                     >
-                        {message.content.split('\n').map((msg, index)=> (
-                            <React.Fragment key={index}>
-                                {msg}
-                                <br/>
-                            </React.Fragment>
-                        ))}
+                        <div className="content">
+                            {message.content.split('\n').map((msg, index)=> (
+                                <React.Fragment key={index}>
+                                    {msg}
+                                    <br/>
+                                </React.Fragment>
+                            ))}
+                        </div>
+                            
+                        <small className='time'>
+                            {new Date(message.timestamp).toLocaleTimeString('en-US')}
+                        </small>
                     </div>
                 ))}
             </div>
 
             <form className='footer' onSubmit={handleMessage}>
-                <div className="textarea">
+
+                <div className="container">
+                    <div className="emoji-picker">
+                        {showPicker && <Picker data={data} onEmojiSelect={handleEmojiSelect} />}
+                    </div>
+
+                    <button type="button" className='emoji-picker-smily' onClick={() => setShowPicker(!showPicker)}>
+                        😀
+                    </button>
+                
                     <textarea
                         placeholder="Message"
                         className='input-field'
@@ -149,11 +182,11 @@ const ChatApp = ({socket, users}) => {
                         onChange={handleTextarea}
                         onKeyDown={handleKeyDown}
                     ></textarea>
-                </div>
 
-                <button type='submit' className='send-button'>
-                    { textareaActive ? <MdSend size={22}/> : <MdKeyboardVoice size={22}/> }
-                </button>
+                    <button type='submit' className='send-button'>
+                        { textareaActive ? <MdSend size={22}/> : <MdKeyboardVoice size={22}/> }
+                    </button>
+                </div>
             </form>
         </div>
     );

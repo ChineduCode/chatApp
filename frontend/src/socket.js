@@ -1,8 +1,12 @@
 import { io } from 'socket.io-client'
 
-const URL = process.env.SERVER_URL
-const socket = io(URL, {
-    autoConnect: false
+console.log('connected to', process.env.REACT_APP_SERVER_URL)
+
+const socket = io('http://localhost:5000', {
+    autoConnect: false,
+    // reconnection: true,
+    // reconnectionAttempts: Infinity,
+    // reconnectionDelay: 1000,
 })
 
 socket.onAny((event, ...args)=> {
