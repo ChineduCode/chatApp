@@ -7,6 +7,7 @@ const User = require('./models/user')
 const Message = require('./models/message')
 const Chat = require('./models/chat')
 const jwt = require('jsonwebtoken')
+const userRouter = require('./Routes/userRouter')
 
 require('dotenv').config()
 connectDB()
@@ -24,7 +25,7 @@ app.use(express.urlencoded({extended: true}))
 
 
 //routes
-app.use('/api/users', require('./routes/userRouter'))
+app.use('/api/users', userRouter)
 
 app.get('/', (req, res)=> res.send('Hello world'))
 
