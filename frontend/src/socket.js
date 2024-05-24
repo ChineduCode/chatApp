@@ -2,7 +2,7 @@ import { io } from 'socket.io-client'
 
 console.log('connected to', process.env.REACT_APP_SERVER_URL)
 
-const socket = io('http://localhost:5000', {
+const socket = io(process.env.REACT_APP_SERVER_URL, {
     autoConnect: false,
     // reconnection: true,
     // reconnectionAttempts: Infinity,
