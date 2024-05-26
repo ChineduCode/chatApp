@@ -1,16 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { HiMiniEllipsisVertical } from "react-icons/hi2";
 import { MdOutlineVideocam, MdOutlineCall, MdKeyboardVoice, MdSend } from "react-icons/md";
-//import { MdOutlineEmojiEmotions, MdOutlineAttachFile, MdOutlinePhotoCamera, MdOutlineKeyboard } from "react-icons/md";
 import { IoArrowBackOutline } from "react-icons/io5";
 import { IoMdArrowDropright } from "react-icons/io";
 import { FaUser } from 'react-icons/fa6'
 import { Link, useParams } from 'react-router-dom'
-//import { Picker } from 'emoji-mart';
-//import 'emoji-mart/css/emoji-mart.css';
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
-
 
 const ChatApp = ({socket, users}) => {
     const { username } = useParams()
@@ -115,7 +111,9 @@ const ChatApp = ({socket, users}) => {
         <div className='chat-page'>
             <div className="header">
                 <div className="profile">
-                    <IoArrowBackOutline />
+                    <Link to={'/chats'} className='chats-link'>
+                        <IoArrowBackOutline />
+                    </Link>
                     <div className="profile-pics">
                         <FaUser size={27}/>
                     </div>

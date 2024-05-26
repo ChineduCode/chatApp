@@ -483,6 +483,7 @@ footer .active-page .icon svg {
 .chat-page .footer .emoji-picker {
   position: fixed;
   width: 100%;
+  bottom: 70px;
 }
 
 .sockets {

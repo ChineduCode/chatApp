@@ -1,12 +1,13 @@
 const express = require('express');
 const { createServer } = require('http');
+const { join } = require('path')
 const cors = require('cors');
 const { Server } = require('socket.io')
 const connectDB = require('./config/connectDB')
 const User = require('./models/user')
 const Message = require('./models/message')
 const Chat = require('./models/chat')
-const jwt = require('jsonwebtoken')
+//const jwt = require('jsonwebtoken')
 const userRouter = require('./Routes/userRouter')
 
 require('dotenv').config()
@@ -23,11 +24,16 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
+//server static file from react
+app.use(express.static(join(__dirname, '..', 'frontend', 'build')))
+
 
 //routes
 app.use('/api/users', userRouter)
 
-app.get('/', (req, res)=> res.send('Hello world'))
+app.get('*', (req, res)=> {
+    res.sendFile(join(__dirname, '..', 'frontend', 'build', 'index.html'))
+})
 
 const server = createServer(app)
 const io = new Server(server, {
