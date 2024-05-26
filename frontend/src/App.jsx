@@ -97,24 +97,6 @@ const App = ()=> {
                 });
             }
         });
-        
-        // socket.on("user connected", (user) => {
-        //   setUsers(prevUsers => {
-        //     const updatedUsers = prevUsers.map(existingUser => {
-        //       if (existingUser.userID === user.userID) {
-        //         return { ...existingUser, connected: true };
-        //       }
-        //       return existingUser;
-        //     });
-        //     const isNewUser = !updatedUsers.some(existingUser => existingUser.userID === user.userID);
-        //     if (isNewUser) {
-        //       initReactiveProperties(user);
-        //       updatedUsers.push(user);
-        //       //console.log(`is new user ${JSON.stringify(user)}`)
-        //     }
-        //     return updatedUsers;
-        //   });
-        // });
 
         return ()=> {
             socket.off('session')
@@ -129,7 +111,7 @@ const App = ()=> {
         <>
            <Router>
                 <Routes>
-                    <Route path="/" element={<WelcomePage />} />
+                    <Route exact path="/" element={<WelcomePage />} />
                     <Route path="/register" element={<RegisterPage />} />
                     <Route path="/login" element={<LoginPage socket={socket} onSelectUsername={onSelectUsername} />} />
                     <Route path="/sockets" element={<SocketsPage users={updatedUsers}/>} />
