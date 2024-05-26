@@ -1,6 +1,7 @@
 import socket from "./socket"
 import { useEffect, useState } from 'react'
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+//import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import WelcomePage from './components/WelcomePage'
 import RegisterPage from './components/RegisterPage'
 import LoginPage from "./components/LoginPage"
@@ -109,9 +110,9 @@ const App = ()=> {
 
     return(
         <>
-           <Router>
+           <BrowserRouter>
                 <Routes>
-                    <Route exact path="/" element={<WelcomePage />} />
+                    <Route index element={<WelcomePage />} />
                     <Route path="/register" element={<RegisterPage />} />
                     <Route path="/login" element={<LoginPage socket={socket} onSelectUsername={onSelectUsername} />} />
                     <Route path="/sockets" element={<SocketsPage users={updatedUsers}/>} />
@@ -120,8 +121,9 @@ const App = ()=> {
                     <Route path="/updates" element={<UpdatesPage socket={socket}/>} />
                     <Route path="/communities" element={<CommunitiesPage socket={socket}/>} />
                     <Route path="/calls" element={<CallsPage socket={socket}/>} />
+                    <Route path="*" element={<h2>Not Found</h2>} />
                 </Routes>
-           </Router>
+           </BrowserRouter>
         </>
     )
 }
