@@ -2,7 +2,6 @@ import Header from './ChatsHeader';
 import Footer from './Footer';
 import NewChatBtn from './NewChatBtn';
 import Loading from './Loading'
-//import { useState, useEffect } from 'react';
 import { FaUser } from 'react-icons/fa6'
 import { LiaCheckDoubleSolid } from "react-icons/lia";
 import { Link } from 'react-router-dom'
