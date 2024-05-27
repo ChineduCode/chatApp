@@ -1,7 +1,7 @@
 import socket from "./socket"
 import { useEffect, useState } from 'react'
-//import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+//import { BrowserRouter, Routes, Route } from "react-router-dom";
 import WelcomePage from './components/WelcomePage'
 import RegisterPage from './components/RegisterPage'
 import LoginPage from "./components/LoginPage"
@@ -109,12 +109,12 @@ const App = ()=> {
             socket.off('chats')
             socket.off('users')
         }
-    }, [setChats, setUpdatedUsers, updatedUsers, userConnected, onlineUsers])
+    }, [setChats, setUpdatedUsers, updatedUsers, userConnected, setOnlineUsers, onlineUsers])
 
 
     return(
         <>
-           <BrowserRouter>
+           <Router>
                 <Routes>
                     <Route index element={<WelcomePage />} />
                     <Route path="/register" element={<RegisterPage />} />
@@ -127,7 +127,7 @@ const App = ()=> {
                     <Route path="/calls" element={<CallsPage socket={socket}/>} />
                     <Route path="*" element={<h2>Not Found</h2>} />
                 </Routes>
-           </BrowserRouter>
+           </Router>
         </>
     )
 }
