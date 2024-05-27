@@ -346,6 +346,9 @@ footer .active-page .icon svg {
   background-color: hsl(45, 100%, 95%);
   min-height: 100vh;
 }
+.chat-page a {
+  color: hsl(0, 0%, 0%);
+}
 .chat-page .header {
   position: fixed;
   top: 0px;
@@ -486,11 +489,14 @@ footer .active-page .icon svg {
   bottom: 70px;
 }
 
-.sockets {
+.sockets-page {
   background-color: hsl(0, 0%, 100%);
   min-height: 100vh;
 }
-.sockets .header {
+.sockets-page a {
+  color: hsl(0, 0%, 0%);
+}
+.sockets-page .header {
   padding: 13px;
   position: fixed;
   top: 0px;
@@ -499,47 +505,47 @@ footer .active-page .icon svg {
   background-color: hsl(0, 0%, 100%);
   border-bottom: solid 1px #f2f2f2;
 }
-.sockets .header svg {
+.sockets-page .header svg {
   cursor: pointer;
 }
-.sockets .header .first-container {
+.sockets-page .header .first-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.sockets .header .first-container .left-container {
+.sockets-page .header .first-container .left-container {
   display: flex;
   align-items: center;
 }
-.sockets .header .first-container .left-container .container {
+.sockets-page .header .first-container .left-container .container {
   margin-left: 15px;
 }
-.sockets .header .first-container .left-container .container .heading {
+.sockets-page .header .first-container .left-container .container .heading {
   font-weight: 600;
 }
-.sockets .header .first-container .left-container .container .sub-heading {
+.sockets-page .header .first-container .left-container .container .sub-heading {
   font-size: 13px;
 }
-.sockets .header .first-container .option {
+.sockets-page .header .first-container .option {
   display: flex;
   align-items: center;
 }
-.sockets .header .first-container .option .search-svg {
+.sockets-page .header .first-container .option .search-svg {
   margin-right: 25px;
 }
-.sockets .header .search {
+.sockets-page .header .search {
   position: fixed;
   top: 13px;
   left: 0px;
   width: 100%;
 }
-.sockets .header .search .form-control {
+.sockets-page .header .search .form-control {
   position: relative;
   padding: 0 15px;
   z-index: 2;
   display: none;
 }
-.sockets .header .search .form-control input {
+.sockets-page .header .search .form-control input {
   width: 100%;
   padding: 13px 13px 13px 50px;
   border-radius: 30px;
@@ -547,25 +553,25 @@ footer .active-page .icon svg {
   background-color: #f2f2f2;
   transition: all 0.4s ease-in-out;
 }
-.sockets .header .search .form-control .back-arrow-svg {
+.sockets-page .header .search .form-control .back-arrow-svg {
   position: absolute;
   top: 50%;
   left: 10px; /* Adjust the distance from the left side */
   transform: translateY(-50%);
   margin-left: 20px;
 }
-.sockets .header .search .search-input-active {
+.sockets-page .header .search .search-input-active {
   display: block;
 }
-.sockets .container .add-container {
+.sockets-page .container .add-container {
   padding: 4rem 20px 0px;
 }
-.sockets .container .add-container .container {
+.sockets-page .container .add-container .container {
   display: flex;
   align-items: center;
   margin: 20px 0px;
 }
-.sockets .container .add-container .container .icon {
+.sockets-page .container .add-container .container .icon {
   padding: 6px;
   background-color: #25D366;
   border-radius: 50%;
@@ -576,27 +582,27 @@ footer .active-page .icon svg {
   justify-content: center;
   color: hsl(0, 0%, 100%);
 }
-.sockets .container .add-container .container .text {
+.sockets-page .container .add-container .container .text {
   margin-left: 18px;
   font-weight: 600;
 }
-.sockets .container .connected-sockets {
+.sockets-page .container .connected-sockets {
   padding: 20px;
 }
-.sockets .container .connected-sockets .heading {
+.sockets-page .container .connected-sockets .heading {
   font-size: 14px;
   color: hsl(0, 0%, 50%);
   font-weight: 600;
 }
-.sockets .container .connected-sockets .contacts .contact {
+.sockets-page .container .connected-sockets .contacts .contact {
   margin: 20px 0;
 }
-.sockets .container .connected-sockets .contacts .contact a {
+.sockets-page .container .connected-sockets .contacts .contact a {
   display: flex;
   align-items: center;
   color: hsl(0, 0%, 0%);
 }
-.sockets .container .connected-sockets .contacts .contact a .profile-pics {
+.sockets-page .container .connected-sockets .contacts .contact a .profile-pics {
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -606,17 +612,17 @@ footer .active-page .icon svg {
   justify-content: center;
   padding: 1px;
 }
-.sockets .container .connected-sockets .contacts .contact a .profile-pics svg {
+.sockets-page .container .connected-sockets .contacts .contact a .profile-pics svg {
   color: hsl(0, 0%, 100%);
   border-radius: 50%;
 }
-.sockets .container .connected-sockets .contacts .contact a .username-about-container {
+.sockets-page .container .connected-sockets .contacts .contact a .username-about-container {
   margin-left: 18px;
 }
-.sockets .container .connected-sockets .contacts .contact a .username-about-container .username {
+.sockets-page .container .connected-sockets .contacts .contact a .username-about-container .username {
   font-weight: 600;
 }
-.sockets .container .connected-sockets .contacts .contact a .username-about-container .about {
+.sockets-page .container .connected-sockets .contacts .contact a .username-about-container .about {
   font-size: 13px;
   color: hsl(0, 0%, 50%);
 }/*# sourceMappingURL=main.css.map */

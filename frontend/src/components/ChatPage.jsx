@@ -16,7 +16,6 @@ const ChatApp = ({socket, users}) => {
     let [textareaActive, setTextareaActive] = useState(false)
     const [messages, setMessages] = useState([])
     const chatContainerRef = useRef(null)
-    //const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const [showPicker, setShowPicker] = useState(false);
 
     useEffect(()=> {
@@ -59,7 +58,6 @@ const ChatApp = ({socket, users}) => {
         }
     }, [messages, selectedUser, socket])
 
-    //Scroll to the bottom when the messages updates
     useEffect(()=> {
         if (chatContainerRef.current) {
             chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;

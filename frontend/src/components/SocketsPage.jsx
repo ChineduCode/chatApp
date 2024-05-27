@@ -3,9 +3,9 @@ import { MdSearch, MdGroupAdd, MdPersonAddAlt1, MdGroups } from "react-icons/md"
 import { HiMiniEllipsisVertical } from "react-icons/hi2";
 import { FaUser } from 'react-icons/fa6'
 import { Link } from  'react-router-dom'
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-const SocketsPage = ({socket, users})=> {
+const SocketsPage = ({users})=> {
     const [search, setSearch] = useState('')
     let [menuActive, setMenuActive] = useState(false)
     let [searchInputActive, setSearchInputActive] = useState(false)
@@ -15,19 +15,17 @@ const SocketsPage = ({socket, users})=> {
         console.log(search)
     }
 
-    useEffect(()=> console.log(users))
-
     return( 
-        <section className="sockets">
+        <section className="sockets-page">
             <div className="header">
                 <div className="first-container">
                     <div className="left-container">
                         <Link to={'/chats'} className="chats-link">
-                            <IoArrowBackOutline size={25}/>
+                            <IoArrowBackOutline />
                         </Link>
                         <div className="container">
                             <div className="heading">Select contact</div>
-                            <div className="sub-heading">200 contacts</div>
+                            <div className="sub-heading">{users.length} contacts</div>
                         </div>
                     </div>
 

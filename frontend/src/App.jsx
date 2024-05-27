@@ -40,8 +40,6 @@ const App = ()=> {
             socket.username = username
         })
 
-        //console.log(socket.connected)
-
         socket.on("user connected", ({connected})=> {
 
             //socket.connected = connected

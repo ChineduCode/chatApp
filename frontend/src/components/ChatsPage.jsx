@@ -69,7 +69,7 @@ const ChatsPage = ({ chats }) => {
                         <Loading />
                         :
                         chats.map((chat, index) => (
-                            <div to={`/chat/${chat.username}`} key={index} className="chat">
+                            <Link to={`/chat/${chat.username}`} key={index} className="chat">
                                 <div className="profile-pics-last-message-container">
                                     <div className="profile-pics">
                                         <FaUser size={27}/>
@@ -86,7 +86,7 @@ const ChatsPage = ({ chats }) => {
                                     <span className="time"> {new Date(chat.lastUpdated).toLocaleTimeString('en-US')} </span>
                                     <span className="num-of-messages">2</span>
                                 </Link>
-                            </div>
+                            </Link>
                        ))
                     }
                 </div>

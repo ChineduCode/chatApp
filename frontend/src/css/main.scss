@@ -368,6 +368,8 @@ footer{
     background-color: hsl(45, 100%, 95%);
     min-height: 100vh;
 
+    a{color: hsl(0, 0%, 0%);}
+
     .header {
         position: fixed;
         top: 0px;
@@ -522,9 +524,13 @@ footer{
     }
 }
 
-.sockets{
+.sockets-page{
     background-color: hsl(0, 0, 100%);
     min-height: 100vh;
+    a{
+        color: hsl(0, 0%, 0%);
+    }
+
     .header{
         padding: 13px;
         position: fixed;
