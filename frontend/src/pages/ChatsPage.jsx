@@ -1,7 +1,7 @@
-import Header from './ChatsHeader';
-import Footer from './Footer';
-import NewChatBtn from './NewChatBtn';
-import Loading from './Loading'
+import Header from '../components/ChatsHeader';
+import Footer from '../components/Footer';
+import NewChatBtn from '../components/NewChatBtn';
+import Loading from '../components/Loading'
 import { FaUser } from 'react-icons/fa6'
 import { LiaCheckDoubleSolid } from "react-icons/lia";
 import { Link } from 'react-router-dom'

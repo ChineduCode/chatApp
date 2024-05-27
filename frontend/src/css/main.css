@@ -12,45 +12,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-.welcome {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.welcome .container {
-  text-align: center;
-  font-family: "Arial", sans-serif;
-  width: 400px;
-  max-width: 100%;
-  padding: 20px;
-}
-.welcome h1 {
-  color: #25D366;
-  animation: fadeIn 2s ease-in-out infinite alternate;
-}
-@keyframes fadeIn {
-  0% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-.welcome .register-login-links {
-  margin-top: 2rem;
-}
-.welcome .register-login-links a {
-  display: block;
-  padding: 10px;
-  margin: 6px;
-  color: hsl(0, 0%, 100%);
-  background-color: #25D366;
-  text-align: center;
-  border-radius: 7px;
-  font-family: inherit;
-}
-
 .loading {
   display: flex;
   justify-content: center;
@@ -72,57 +33,6 @@ body {
   100% {
     transform: rotate(360deg);
   }
-}
-
-.register, .login {
-  margin: 4rem auto;
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 350px;
-  max-width: 100%;
-}
-.register .heading, .login .heading {
-  color: #333333;
-  text-align: center;
-  margin-bottom: 15px;
-}
-.register .form-control, .login .form-control {
-  margin: 7px 0;
-}
-.register .form-control label, .login .form-control label {
-  margin-bottom: 3px;
-  display: inline-block;
-}
-.register .form-control input, .login .form-control input {
-  width: 100%;
-  padding: 10px;
-  box-sizing: border-box;
-  border: 1px solid #cccccc;
-  border-radius: 4px;
-  font-family: "Arial", sans-serif;
-}
-.register button, .login button {
-  display: inline-block;
-  background-color: #25D366;
-  color: #ffffff;
-  padding: 12px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  width: 100%;
-  margin: 10px 0 5px;
-}
-.register button:hover, .login button:hover {
-  background-color: #128c53;
-}
-.register .register-link, .register .login-link, .login .register-link, .login .login-link {
-  margin: 5px 0;
-}
-.register .register-link a, .register .login-link a, .login .register-link a, .login .login-link a {
-  color: #25D366;
-  text-decoration: underline;
 }
 
 .no-error {
@@ -201,6 +111,96 @@ footer .active-page .icon svg {
 
 .menu-active {
   transform: translateY(0%);
+}
+
+.welcome-page {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.welcome-page .container {
+  text-align: center;
+  font-family: "Arial", sans-serif;
+  width: 400px;
+  max-width: 100%;
+  padding: 20px;
+}
+.welcome-page h1 {
+  color: #25D366;
+  animation: fadeIn 2s ease-in-out infinite alternate;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.welcome-page .register-login-links {
+  margin-top: 2rem;
+}
+.welcome-page .register-login-links a {
+  display: block;
+  padding: 10px;
+  margin: 6px;
+  color: hsl(0, 0%, 100%);
+  background-color: #25D366;
+  text-align: center;
+  border-radius: 7px;
+  font-family: inherit;
+}
+
+.register-page, .login-page {
+  margin: 4rem auto;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 350px;
+  max-width: 100%;
+}
+.register-page .heading, .login-page .heading {
+  color: #333333;
+  text-align: center;
+  margin-bottom: 15px;
+}
+.register-page .form-control, .login-page .form-control {
+  margin: 7px 0;
+}
+.register-page .form-control label, .login-page .form-control label {
+  margin-bottom: 3px;
+  display: inline-block;
+}
+.register-page .form-control input, .login-page .form-control input {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  font-family: "Arial", sans-serif;
+}
+.register-page button, .login-page button {
+  display: inline-block;
+  background-color: #25D366;
+  color: #ffffff;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  margin: 10px 0 5px;
+}
+.register-page button:hover, .login-page button:hover {
+  background-color: #128c53;
+}
+.register-page .register-link, .register-page .login-link, .login-page .register-link, .login-page .login-link {
+  margin: 5px 0;
+}
+.register-page .register-link a, .register-page .login-link a, .login-page .register-link a, .login-page .login-link a {
+  color: #25D366;
+  text-decoration: underline;
 }
 
 .chats-page {
@@ -628,4 +628,13 @@ footer .active-page .icon svg {
 .sockets-page .container .connected-sockets .contacts .contact a .username-about-container .about {
   font-size: 13px;
   color: hsl(0, 0%, 50%);
+}
+
+.notfound-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-size: 18px;
+  font-weight: 600;
 }/*# sourceMappingURL=main.css.map */

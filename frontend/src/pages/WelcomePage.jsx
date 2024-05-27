@@ -13,7 +13,7 @@ const WelcomePage = () => {
     })
 
     return(
-        <div className="welcome">
+        <div className="welcome-page">
             <div className="container">  
                 <h1>Welcome To WhatsApp</h1>
 

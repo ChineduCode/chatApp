@@ -115,7 +115,7 @@ io.on('connection', async (socket)=> {
             let chat = await Chat.findOne({
                 participants: { $all: [from, to] }
             })
-     
+    
             if(!chat){
                 chat = new Chat({
                     participants: [from, to],

@@ -1,16 +1,16 @@
 import socket from "./socket"
 import { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-//import { BrowserRouter, Routes, Route } from "react-router-dom";
-import WelcomePage from './components/WelcomePage'
-import RegisterPage from './components/RegisterPage'
-import LoginPage from "./components/LoginPage"
-import SocketsPage from "./components/SocketsPage"
-import ChatPage from './components/ChatPage'
-import ChatsPage from './components/ChatsPage'
-import UpdatesPage from './components/UpdatesPage'
-import CommunitiesPage from './components/CommunitiesPage'
-import CallsPage from './components/CallsPage'
+import WelcomePage from './pages/WelcomePage'
+import RegisterPage from './pages/RegisterPage'
+import LoginPage from "./pages/LoginPage"
+import SocketsPage from "./pages/SocketsPage"
+import ChatPage from './pages/ChatPage'
+import ChatsPage from './pages/ChatsPage'
+import UpdatesPage from './pages/UpdatesPage'
+import CommunitiesPage from './pages/CommunitiesPage'
+import CallsPage from './pages/CallsPage'
+import NotFound from "./pages/NotFound"
 
 const App = ()=> {
     const [updatedUsers, setUpdatedUsers] = useState([])
@@ -125,7 +125,7 @@ const App = ()=> {
                     <Route path="/updates" element={<UpdatesPage socket={socket}/>} />
                     <Route path="/communities" element={<CommunitiesPage socket={socket}/>} />
                     <Route path="/calls" element={<CallsPage socket={socket}/>} />
-                    <Route path="*" element={<h2>Not Found</h2>} />
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
            </Router>
         </>

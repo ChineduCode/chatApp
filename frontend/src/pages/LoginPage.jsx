@@ -47,7 +47,7 @@ const LoginPage = ({ socket, onSelectUsername }) => {
 
 
     return(
-        <form className="login" onSubmit={handleLogin}>
+        <form className="login-page" onSubmit={handleLogin}>
             <h2 className="heading">Login</h2>
             <small className={`no-error ${error ? 'error': 'no-error'}`}>{error}</small>
             <div className="form-control">

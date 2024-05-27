@@ -44,7 +44,7 @@ const RegisterPage = () => {
     
 
     return(
-        <form className="register" onSubmit={handleRegister}>
+        <form className="register-page" onSubmit={handleRegister}>
             <h2 className="heading">Create an Account</h2>
             <small className={`no-error ${error ? 'error': 'no-error'}`}>{error}</small>
             <div className="form-control">
