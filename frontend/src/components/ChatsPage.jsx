@@ -74,18 +74,18 @@ const ChatsPage = ({ chats }) => {
                                     <div className="profile-pics">
                                         <FaUser size={27}/>
                                     </div>
-                                    <Link to={`/chat/${chat.username}`} className="participant_and_last-message">
+                                    <div className="participant_and_last-message">
                                         <div className="chat-participant">{chat.username}</div>
                                         <div className="status_last-message-container">
                                             <span className="status"> <LiaCheckDoubleSolid /> </span>
                                             <span className="chat-last-message">{chat.content}</span>
                                         </div>
-                                    </Link>
+                                    </div>
                                 </div>
-                                <Link to={`/chat/${chat.username}`} className="time-num-of-messages">
+                                <div className="time-num-of-messages">
                                     <span className="time"> {new Date(chat.lastUpdated).toLocaleTimeString('en-US')} </span>
                                     <span className="num-of-messages">2</span>
-                                </Link>
+                                </div>
                             </Link>
                        ))
                     }

@@ -16,6 +16,7 @@ const App = ()=> {
     const [updatedUsers, setUpdatedUsers] = useState([])
     const [chats, setChats] = useState([]);
     let [userConnected, setUserConnected] = useState(false)
+    let [onlineUsers, setOnlineUsers] = useState([])
 
     const onSelectUsername = (data)=> {
         const username = data.username
@@ -48,7 +49,6 @@ const App = ()=> {
 
         // Emit the event to get chats
         socket.emit('getChats');
-        
         socket.on('chats', (chats)=> {
             const userID = socket.userID
             const processedChats = chats.map(chat => {
@@ -66,6 +66,11 @@ const App = ()=> {
             setChats(processedChats);
         })
 
+        socket.emit("user online", {userID, username});
+        socket.on("online users", (users) => {
+            setOnlineUsers(users);
+        });
+
 
         const initReactiveProperties = (user) => {
             const newUser = { ...user };
@@ -80,7 +85,7 @@ const App = ()=> {
                     setUpdatedUsers(prevUsers => {
                         const updatedUsers = [...prevUsers];
                         user.self = user._id === socket.userID;
-
+                        user.online = onlineUsers.some(onlineUser => onlineUser.userID === user._id)
                         initReactiveProperties(user);
                         updatedUsers.push(user);
     
@@ -98,12 +103,13 @@ const App = ()=> {
         });
 
         return ()=> {
+            socket.off('online users')
             socket.off('session')
             socket.off('user connected')
             socket.off('chats')
             socket.off('users')
         }
-    }, [setChats, setUpdatedUsers, updatedUsers, userConnected])
+    }, [setChats, setUpdatedUsers, updatedUsers, userConnected, onlineUsers])
 
 
     return(

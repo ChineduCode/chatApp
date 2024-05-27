@@ -79,20 +79,20 @@ io.use( async (socket, next)=> {
     
 })
 
+let onlineUsers = []
 
 io.on('connection', async (socket)=> {
     try {
 
-        console.log(`User connected`, socket.username)
+        
         socket.emit('session', {
             userID: socket.userID,
             username: socket.username
         })
     
         socket.join(socket.userID)
-    
-        let users = []
-        users = await User.find({}, {__v: 0, password: 0, createdAt: 0, updatedAt: 0})
+        
+        let users = await User.find({}, {__v: 0, password: 0, createdAt: 0, updatedAt: 0})
         socket.emit('users', users)
     
         //Private message
@@ -110,7 +110,7 @@ io.on('connection', async (socket)=> {
     
             const newMessage = new Message(message)
             await newMessage.save()
-    
+            
             //Create chat for the message
             let chat = await Chat.findOne({
                 participants: { $all: [from, to] }
@@ -125,11 +125,11 @@ io.on('connection', async (socket)=> {
             chat.lastMessage = newMessage._id,
             chat.lastUpdated = newMessage.timestamp
             //console.log(chat)
-    
+            
             await chat.save()
             
         });
-    
+        
         socket.on("getMessages", async ()=> {
             const messages = await Message.find({
                 $or: [
@@ -137,10 +137,10 @@ io.on('connection', async (socket)=> {
                     { to: socket.userID }
                 ]
             })
-    
+            
             socket.emit("messages", messages)
         })
-    
+        
         socket.on("getChats", async ()=> {
             const chats = await Chat.find({
                 participants: socket.userID
@@ -150,12 +150,19 @@ io.on('connection', async (socket)=> {
                 populate: { path: 'from to', select: 'username' }
             })
             .populate('participants', 'username');
-    
+            
             socket.emit("chats", chats)
         })
-    
-        socket.emit("user connected", ()=> {
-        })
+        
+        // add new user
+        socket.on("user online", ({userID, username}) => {
+            if (!onlineUsers.some((user) => user.userID === userID)) {  
+                // if user is not added before
+                onlineUsers.push({ userID, username });
+            }
+            // send all active users to new user
+            io.emit("online users", onlineUsers);
+        });
         
     } catch (error) {
         console.log(error.message)

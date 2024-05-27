@@ -208,6 +208,9 @@ footer .active-page .icon svg {
   background-color: hsl(0, 0%, 100%);
   padding: 20px 15px;
 }
+.chats-page a {
+  color: hsl(0, 0%, 0%);
+}
 .chats-page .header .top {
   display: flex;
   align-items: center;

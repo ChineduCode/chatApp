@@ -10,7 +10,7 @@ import Picker from '@emoji-mart/react'
 
 const ChatApp = ({socket, users}) => {
     const { username } = useParams()
-    const [selectedUser, setSelectedUser] = useState(null);
+    const [selectedUser, setSelectedUser] = useState({});
     const [textMessage, setTextMessage] = useState('')
     let [menuActive, setMenuActive] = useState(false)
     let [textareaActive, setTextareaActive] = useState(false)
@@ -117,7 +117,7 @@ const ChatApp = ({socket, users}) => {
                     </div>
                     <div className="username-last-seen-container">
                         <div className="username">{username}</div> 
-                        <div className="last-seen"></div>
+                        <small className="last-seen">{selectedUser && selectedUser.online ? 'online' : 'offline'}</small>
                     </div>
                 </div>
                 <div className="options">
