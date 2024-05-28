@@ -15,7 +15,7 @@ import NotFound from "./pages/NotFound"
 const App = ()=> {
     const [updatedUsers, setUpdatedUsers] = useState([])
     const [chats, setChats] = useState([]);
-    let [userConnected, setUserConnected] = useState(false)
+    //let [userConnected, setUserConnected] = useState(false)
     let [onlineUsers, setOnlineUsers] = useState([])
 
     const onSelectUsername = (data)=> {
@@ -32,24 +32,26 @@ const App = ()=> {
             socket.auth = { userID, username };
             socket.connect();
         }
+    },[])
 
-        socket.on('session', ({ userID, username })=> {
+    useEffect(()=> {
+        const handleSession = ({ userID, username })=> {
             socket.auth = { userID, username }
             localStorage.setItem("userID", userID)
             localStorage.setItem("username", username)
             socket.userID = userID
             socket.username = username
-        })
+        }
 
-        socket.on("user connected", ({connected})=> {
+        socket.on('session', handleSession)
 
-            //socket.connected = connected
-            setUserConnected(connected)
-        })
+        return ()=> {
+            socket.off('session', handleSession)
+        }
+    },[])
 
-        // Emit the event to get chats
-        socket.emit('getChats');
-        socket.on('chats', (chats)=> {
+    useEffect(()=> {
+        const handleChats = (chats)=> {
             const userID = socket.userID
             const processedChats = chats.map(chat => {
                 const { lastMessage, lastUpdated } = chat;
@@ -64,21 +66,40 @@ const App = ()=> {
             });
     
             setChats(processedChats);
-        })
+        }
 
-        socket.emit("user online", {userID, username});
-        socket.on("online users", (users) => {
+        // Emit the event to get chats
+        socket.emit('getChats');
+        socket.on('chats', handleChats)
+
+        return ()=> {
+            socket.off('chats', handleChats)
+        }
+
+    }, [setChats])
+
+    useEffect(()=> {
+        const handleOnlineUsers = (users)=> {
             setOnlineUsers(users);
-        });
+        }
 
+        socket.emit("user online", {userID: socket.userID, username: socket.username});
+        socket.on('online users', handleOnlineUsers)
 
+        return ()=> {
+            socket.off('online users', handleOnlineUsers)
+        }
+
+    }, [setOnlineUsers])
+
+    useEffect(()=> {
         const initReactiveProperties = (user) => {
             const newUser = { ...user };
             newUser.hasNewMessages = false;
             return newUser;
         };
 
-        socket.on("users", (users) => {
+        const handleUsers = (users) => {
             //Add self property to each user
             if(updatedUsers.length === 0){
                 users.forEach((user) => {
@@ -100,16 +121,40 @@ const App = ()=> {
                     });
                 });
             }
-        });
+        }
+
+        socket.on('users', handleUsers)
 
         return ()=> {
-            socket.off('online users')
-            socket.off('session')
-            socket.off('user connected')
-            socket.off('chats')
-            socket.off('users')
+            socket.off('users', handleUsers)
         }
-    }, [setChats, setUpdatedUsers, updatedUsers, userConnected, setOnlineUsers, onlineUsers])
+        
+    }, [setUpdatedUsers, updatedUsers, onlineUsers])
+
+    useEffect(()=> {
+        // Tab has focus
+        const handleFocus = async () => {
+            socket.emit("user online", {userID : socket.userID, username: socket.username});
+            socket.on("online users", (users) => {
+                setOnlineUsers(users);
+            });
+        };
+
+        // Tab closed
+        const handleBlur = () => {
+            socket.emit("offline")  
+        };
+
+        // Track if the user changes the tab to determine when they are online
+        window.addEventListener('focus', handleFocus);
+        window.addEventListener('blur', handleBlur);
+
+        return () => {
+            window.removeEventListener('focus', handleFocus);
+            window.removeEventListener('blur', handleBlur);
+        };
+
+    },[setOnlineUsers])
 
 
     return(

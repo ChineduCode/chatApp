@@ -82,8 +82,8 @@ io.use( async (socket, next)=> {
 let onlineUsers = []
 
 io.on('connection', async (socket)=> {
+    console.log('user connected', socket.username)
     try {
-
         
         socket.emit('session', {
             userID: socket.userID,
@@ -153,7 +153,7 @@ io.on('connection', async (socket)=> {
             
             socket.emit("chats", chats)
         })
-        
+         
         // add new user
         socket.on("user online", ({userID, username}) => {
             if (!onlineUsers.some((user) => user.userID === userID)) {  
@@ -162,6 +162,20 @@ io.on('connection', async (socket)=> {
             }
             // send all active users to new user
             io.emit("online users", onlineUsers);
+        });
+
+        //on disconnect
+        socket.on("disconnect", () => {
+            onlineUsers = onlineUsers.filter((user) => user.userID !== socket.userID)
+            // send all online users to all users
+            io.emit("online users", onlineUsers);
+        });
+
+        socket.on("offline", () => {
+            // remove user from active users
+            onlineUsers = onlineUsers.filter((user) => user.userID !== socket.userID)
+            // send all online users to all users
+            io.emit("get-users", onlineUsers);
         });
         
     } catch (error) {
