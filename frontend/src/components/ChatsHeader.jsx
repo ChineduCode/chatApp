@@ -3,7 +3,7 @@ import { AiOutlineCamera } from 'react-icons/ai'
 import { useRef, useState } from 'react';
 import HeaderMenu from './HeaderMenu';
 
-const Header = () => {
+const Header = ({chats}) => {
     const [focus, setFocus] = useState(false)
     const myRef = useRef(null)
 
@@ -25,16 +25,21 @@ const Header = () => {
                     <HeaderMenu />
                 </div>
             </div>
-            <div className="search">
-                <input 
-                    type="search" 
-                    name="search message" 
-                    className={`search-input ${focus ? 'search-input-active': 'search-input'}`}
-                    onFocus={onFocus}
-                    onBlur={onBlur}
-                />
-                <div className={`search-placeholder ${focus ? 'search-placeholder-active': 'search-placeholder'}`} ref={myRef}> <FaMagnifyingGlass /> <span>Search...</span> </div>
-            </div>
+
+            {
+                chats.length > 0
+                &&
+                <div className="search">
+                    <input 
+                        type="search" 
+                        name="search message" 
+                        className={`search-input ${focus ? 'search-input-active': 'search-input'}`}
+                        onFocus={onFocus}
+                        onBlur={onBlur}
+                    />
+                    <div className={`search-placeholder ${focus ? 'search-placeholder-active': 'search-placeholder'}`} ref={myRef}> <FaMagnifyingGlass /> <span>Search...</span> </div>
+                </div>
+            }
         </header>
     )
 }

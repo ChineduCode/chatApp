@@ -203,6 +203,15 @@ footer .active-page .icon svg {
   text-decoration: underline;
 }
 
+.new-chat {
+  padding: 6rem 4rem;
+  text-align: center;
+}
+.new-chat .description {
+  margin: 1rem 0;
+  color: hsl(0, 0%, 50%);
+}
+
 .chats-page {
   min-height: 100vh;
   background-color: hsl(0, 0%, 100%);
