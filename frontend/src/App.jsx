@@ -11,6 +11,7 @@ import UpdatesPage from './pages/UpdatesPage'
 import CommunitiesPage from './pages/CommunitiesPage'
 import CallsPage from './pages/CallsPage'
 import NotFound from "./pages/NotFound"
+import PrivateRoutes from "./useAuth"
 
 const App = ()=> {
     const [updatedUsers, setUpdatedUsers] = useState([])
@@ -163,12 +164,14 @@ const App = ()=> {
                     <Route index element={<WelcomePage />} />
                     <Route path="/register" element={<RegisterPage />} />
                     <Route path="/login" element={<LoginPage socket={socket} onSelectUsername={onSelectUsername} />} />
-                    <Route path="/sockets" element={<SocketsPage users={updatedUsers}/>} />
-                    <Route path="/chats" element={<ChatsPage socket={socket} users={updatedUsers} chats={chats}/>}/>
-                    <Route path="/chat/:username" element={<ChatPage socket={socket} users={updatedUsers}/>} />
-                    <Route path="/updates" element={<UpdatesPage socket={socket}/>} />
-                    <Route path="/communities" element={<CommunitiesPage socket={socket}/>} />
-                    <Route path="/calls" element={<CallsPage socket={socket}/>} />
+                    <Route element={<PrivateRoutes />}>
+                        <Route path="/sockets" element={<SocketsPage users={updatedUsers}/>} />
+                        <Route path="/chats" element={<ChatsPage socket={socket} users={updatedUsers} chats={chats}/>}/>
+                        <Route path="/chat/:username" element={<ChatPage socket={socket} users={updatedUsers}/>} />
+                        <Route path="/updates" element={<UpdatesPage socket={socket}/>} />
+                        <Route path="/communities" element={<CommunitiesPage socket={socket}/>} />
+                        <Route path="/calls" element={<CallsPage socket={socket}/>} />
+                    </Route>
                     <Route path="*" element={<NotFound />} />
                 </Routes>
            </Router>
@@ -176,4 +179,4 @@ const App = ()=> {
     )
 }
 
-export default App;
+export default App;       
