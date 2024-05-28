@@ -2,62 +2,29 @@ import Header from '../components/ChatsHeader';
 import Footer from '../components/Footer';
 import NewChatBtn from '../components/NewChatBtn';
 import Loading from '../components/Loading'
+import NewChat from '../components/NewChat'
 import { FaUser } from 'react-icons/fa6'
 import { LiaCheckDoubleSolid } from "react-icons/lia";
 import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 
 const ChatsPage = ({ chats }) => {
-    
-    //const [chats, setChats] = useState([]);
+    const [loading, setLoading] = useState(false)
 
-    //const navigate = useNavigate()
+    useEffect(()=> {
+        setLoading(true)
+        if(chats || chats.length === 0){
+            setLoading(false)
+        }
+    }, [chats])
 
-    // useEffect(() => {
-    //     const userID = localStorage.getItem('userID')
-    //     const username = localStorage.getItem('username')
+    if(loading){
+        <Loading />
+    }
 
-    //     if(userID && username){
-    //         console.log(userID, username)
-    //         socket.auth = { username, userID }
-    //         socket.connect()
-    //     }else{
-    //         navigate('/login')
-    //     }
-
-    //     // socket.on('session', ({ userID, username })=> {
-    //     //     socket.auth = { userID, username }
-    //     //     localStorage.setItem("userID", userID)
-    //     //     localStorage.setItem("username", username)
-    //     //     socket.userID = userID
-    //     //     socket.username = username
-    //     // })
-
-    //     // Emit the event to get chats
-    //     socket.emit('getChats');
-
-    //     // Clean up the effect
-    //     socket.on('chats', (chats)=> {
-    //         const userID = socket.userID
-
-    //         const processedChats = chats.map(chat => {
-    //             const { lastMessage, lastUpdated } = chat;
-    //             //const otherParticipant = participants.find(participant => participant._id !== userID);
-    //             const isSentByCurrentUser = lastMessage.from._id === userID;
-
-    //             return {
-    //                 content: lastMessage.content,
-    //                 username: isSentByCurrentUser ? lastMessage.to.username : lastMessage.from.username,
-    //                 lastUpdated
-    //             };
-    //         });
-
-    //         setChats(processedChats);
-    //     })
-        
-    //     return () => {
-    //         socket.off('chats');
-    //     };
-    // }, [socket, navigate, setChats]);
+    if(chats.length === 0){
+        <NewChat />
+    }
 
     return(
         <>

@@ -100,7 +100,6 @@ io.on('connection', async (socket)=> {
             })
             .populate('participants', 'username');
             
-            console.log(chats)
             socket.emit("chats", chats)
         })
         
