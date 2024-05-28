@@ -91,6 +91,18 @@ io.on('connection', async (socket)=> {
         })
     
         socket.join(socket.userID)
+
+        socket.on("getChats", async ()=> {
+            const chats = await Chat.find({participants: socket.userID})
+            .populate({
+                path: 'lastMessage',
+                populate: { path: 'from to', select: 'username' }
+            })
+            .populate('participants', 'username');
+            
+            console.log(chats)
+            socket.emit("chats", chats)
+        })
         
         let users = await User.find({}, {__v: 0, password: 0, createdAt: 0, updatedAt: 0})
         socket.emit('users', users)
@@ -141,18 +153,17 @@ io.on('connection', async (socket)=> {
             socket.emit("messages", messages)
         })
         
-        socket.on("getChats", async ()=> {
-            const chats = await Chat.find({
-                participants: socket.userID
-            })
-            .populate({
-                path: 'lastMessage',
-                populate: { path: 'from to', select: 'username' }
-            })
-            .populate('participants', 'username');
+        // socket.on("getChats", async ()=> {
+        //     const chats = await Chat.find({participants: socket.userID})
+        //     .populate({
+        //         path: 'lastMessage',
+        //         populate: { path: 'from to', select: 'username' }
+        //     })
+        //     .populate('participants', 'username')
+        //     .lean()
             
-            socket.emit("chats", chats)
-        })
+        //     socket.emit("chats", chats)
+        // })
          
         // add new user
         socket.on("user online", ({userID, username}) => {

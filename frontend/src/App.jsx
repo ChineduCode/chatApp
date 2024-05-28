@@ -15,7 +15,6 @@ import NotFound from "./pages/NotFound"
 const App = ()=> {
     const [updatedUsers, setUpdatedUsers] = useState([])
     const [chats, setChats] = useState([]);
-    //let [userConnected, setUserConnected] = useState(false)
     let [onlineUsers, setOnlineUsers] = useState([])
 
     const onSelectUsername = (data)=> {
@@ -76,7 +75,7 @@ const App = ()=> {
             socket.off('chats', handleChats)
         }
 
-    }, [setChats])
+    },[setChats])
 
     useEffect(()=> {
         const handleOnlineUsers = (users)=> {
