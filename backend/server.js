@@ -82,7 +82,7 @@ io.use( async (socket, next)=> {
 let onlineUsers = []
 
 io.on('connection', async (socket)=> {
-    console.log('user connected', socket.username)
+
     try {
         
         socket.emit('session', {
@@ -98,7 +98,8 @@ io.on('connection', async (socket)=> {
                 path: 'lastMessage',
                 populate: { path: 'from to', select: 'username' }
             })
-            .populate('participants', 'username');
+            .populate('participants', 'username')
+            .lean()
             
             socket.emit("chats", chats)
         })
@@ -151,18 +152,6 @@ io.on('connection', async (socket)=> {
             
             socket.emit("messages", messages)
         })
-        
-        // socket.on("getChats", async ()=> {
-        //     const chats = await Chat.find({participants: socket.userID})
-        //     .populate({
-        //         path: 'lastMessage',
-        //         populate: { path: 'from to', select: 'username' }
-        //     })
-        //     .populate('participants', 'username')
-        //     .lean()
-            
-        //     socket.emit("chats", chats)
-        // })
          
         // add new user
         socket.on("user online", ({userID, username}) => {

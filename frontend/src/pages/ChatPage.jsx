@@ -7,6 +7,7 @@ import { FaUser } from 'react-icons/fa6'
 import { Link, useParams } from 'react-router-dom'
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
+import Loading from '../components/Loading'
 
 const ChatApp = ({socket, users}) => {
     const { username } = useParams()
@@ -17,6 +18,7 @@ const ChatApp = ({socket, users}) => {
     const [messages, setMessages] = useState([])
     const chatContainerRef = useRef(null)
     const [showPicker, setShowPicker] = useState(false);
+    const [loading, setLoading] = useState(false)
 
     useEffect(()=> {
         const user = users.find(user => user.username.toLowerCase() === username.toLowerCase())
@@ -28,7 +30,7 @@ const ChatApp = ({socket, users}) => {
         socket.emit('getMessages')
         
         socket.on("messages", (message)=> {
-            
+            setLoading(true)
             if(selectedUser){
                 const filteredMessages = message.filter(msg => (msg.from === selectedUser._id) || (msg.to === selectedUser._id))
                 setMessages(filteredMessages.map((msg)=> ({
@@ -36,6 +38,7 @@ const ChatApp = ({socket, users}) => {
                     fromSelf: msg.from === socket.userID
                 })))
             }
+            setLoading(false)
         })
 
         return ()=> {
@@ -104,13 +107,17 @@ const ChatApp = ({socket, users}) => {
         }
     }
 
+    if(loading){
+        return <Loading />
+    }
+
 
     return (
         <div className='chat-page'>
             <div className="header">
                 <div className="profile">
                     <Link to={'/chats'} className='chats-link'>
-                        <IoArrowBackOutline />
+                        <IoArrowBackOutline size={25}/>
                     </Link>
                     <div className="profile-pics">
                         <FaUser size={27}/>

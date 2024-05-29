@@ -15,7 +15,7 @@ import PrivateRoutes from "./useAuth"
 
 const App = ()=> {
     const [updatedUsers, setUpdatedUsers] = useState([])
-    const [chats, setChats] = useState([]);
+    //const [chats, setChats] = useState([]);
     let [onlineUsers, setOnlineUsers] = useState([])
 
     const onSelectUsername = (data)=> {
@@ -50,33 +50,33 @@ const App = ()=> {
         }
     },[])
 
-    useEffect(()=> {
-        const handleChats = (chats)=> {
-            const userID = socket.userID
-            const processedChats = chats.map(chat => {
-                const { lastMessage, lastUpdated } = chat;
-                //const otherParticipant = participants.find(participant => participant._id !== userID);
-                const isSentByCurrentUser = lastMessage.from._id === userID;
+    // useEffect(()=> {
+    //     const handleChats = (chats)=> {
+    //         const userID = socket.userID
+    //         const processedChats = chats.map(chat => {
+    //             const { lastMessage, lastUpdated } = chat;
+    //             //const otherParticipant = participants.find(participant => participant._id !== userID);
+    //             const isSentByCurrentUser = lastMessage.from._id === userID;
     
-                return {
-                    content: lastMessage.content,
-                    username: isSentByCurrentUser ? lastMessage.to.username : lastMessage.from.username,
-                    lastUpdated
-                };
-            });
+    //             return {
+    //                 content: lastMessage.content,
+    //                 username: isSentByCurrentUser ? lastMessage.to.username : lastMessage.from.username,
+    //                 lastUpdated
+    //             };
+    //         });
     
-            setChats(processedChats);
-        }
+    //         setChats(processedChats);
+    //     }
 
-        // Emit the event to get chats
-        socket.emit('getChats');
-        socket.on('chats', handleChats)
+    //     // Emit the event to get chats
+    //     socket.emit('getChats');
+    //     socket.on('chats', handleChats)
 
-        return ()=> {
-            socket.off('chats', handleChats)
-        }
+    //     return ()=> {
+    //         socket.off('chats', handleChats)
+    //     }
 
-    },[setChats])
+    // },[setChats])
 
     useEffect(()=> {
         const handleOnlineUsers = (users)=> {
@@ -166,7 +166,7 @@ const App = ()=> {
                     <Route path="/login" element={<LoginPage socket={socket} onSelectUsername={onSelectUsername} />} />
                     <Route element={<PrivateRoutes />}>
                         <Route path="/sockets" element={<SocketsPage users={updatedUsers}/>} />
-                        <Route path="/chats" element={<ChatsPage socket={socket} users={updatedUsers} chats={chats}/>}/>
+                        <Route path="/chats" element={<ChatsPage socket={socket} users={updatedUsers} />}/>
                         <Route path="/chat/:username" element={<ChatPage socket={socket} users={updatedUsers}/>} />
                         <Route path="/updates" element={<UpdatesPage socket={socket}/>} />
                         <Route path="/communities" element={<CommunitiesPage socket={socket}/>} />

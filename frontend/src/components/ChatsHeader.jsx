@@ -25,7 +25,6 @@ const Header = ({chats}) => {
                     <HeaderMenu />
                 </div>
             </div>
-
             {
                 chats.length > 0
                 &&
@@ -37,7 +36,7 @@ const Header = ({chats}) => {
                         onFocus={onFocus}
                         onBlur={onBlur}
                     />
-                    <div className={`search-placeholder ${focus ? 'search-placeholder-active': 'search-placeholder'}`} ref={myRef}> <FaMagnifyingGlass /> <span>Search...</span> </div>
+                <div className={`search-placeholder ${focus ? 'search-placeholder-active': 'search-placeholder'}`} ref={myRef}> <FaMagnifyingGlass /> <span>Search...</span> </div>
                 </div>
             }
         </header>

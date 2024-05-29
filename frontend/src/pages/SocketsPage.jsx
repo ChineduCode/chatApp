@@ -21,7 +21,7 @@ const SocketsPage = ({users})=> {
                 <div className="first-container">
                     <div className="left-container">
                         <Link to={'/chats'} className="chats-link">
-                            <IoArrowBackOutline />
+                            <IoArrowBackOutline size={25}/>
                         </Link>
                         <div className="container">
                             <div className="heading">Select contact</div>
