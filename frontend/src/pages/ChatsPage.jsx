@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { FaUser } from 'react-icons/fa6';
 import { LiaCheckDoubleSolid } from "react-icons/lia";
 import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet'
 
 const ChatsPage = ({ socket }) => {
     const [chats, setChats] = useState([])
@@ -55,6 +56,9 @@ const ChatsPage = ({ socket }) => {
 
     return (
         <>
+            <Helmet>
+                <title>Chats</title>
+            </Helmet>
             <div className="chats-page">
                 <Header chats={chats}/>
                 <div className="chats">

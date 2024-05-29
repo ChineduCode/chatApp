@@ -8,6 +8,7 @@ import { Link, useParams } from 'react-router-dom'
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
 import Loading from '../components/Loading'
+import { Helmet } from 'react-helmet';
 
 const ChatApp = ({socket, users}) => {
     const { username } = useParams()
@@ -114,6 +115,9 @@ const ChatApp = ({socket, users}) => {
 
     return (
         <div className='chat-page'>
+            <Helmet>
+                <title>{`Chat - ${username}`}</title>
+            </Helmet>
             <div className="header">
                 <div className="profile">
                     <Link to={'/chats'} className='chats-link'>

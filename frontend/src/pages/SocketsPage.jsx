@@ -4,6 +4,7 @@ import { HiMiniEllipsisVertical } from "react-icons/hi2";
 import { FaUser } from 'react-icons/fa6'
 import { Link } from  'react-router-dom'
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 
 const SocketsPage = ({users})=> {
     const [search, setSearch] = useState('')
@@ -17,6 +18,9 @@ const SocketsPage = ({users})=> {
 
     return( 
         <section className="sockets-page">
+            <Helmet>
+                <title>Users</title>
+            </Helmet>
             <div className="header">
                 <div className="first-container">
                     <div className="left-container">

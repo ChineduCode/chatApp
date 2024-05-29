@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import errorDisplay from '../errorDisplay'
+import { Helmet } from 'react-helmet'
 
 const LoginPage = ({ socket, onSelectUsername }) => {
     const [username, setUsername] = useState('')
@@ -48,6 +49,9 @@ const LoginPage = ({ socket, onSelectUsername }) => {
 
     return(
         <form className="login-page" onSubmit={handleLogin}>
+            <Helmet>
+                <title>Login</title>
+            </Helmet>
             <h2 className="heading">Login</h2>
             <small className={`no-error ${error ? 'error': 'no-error'}`}>{error}</small>
             <div className="form-control">

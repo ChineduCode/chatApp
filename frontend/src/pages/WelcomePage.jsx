@@ -15,7 +15,7 @@ const WelcomePage = () => {
     return(
         <div className="welcome-page">
             <div className="container">  
-                <h1>Welcome To WhatsApp</h1>
+                <h1>Welcome To ChatApp</h1>
 
                 <div className="register-login-links">
                     <Link to={'/register'}>Register</Link>

@@ -1,6 +1,7 @@
 import { useNavigate, Link } from 'react-router-dom'
 import { useState } from 'react'
 import errorDisplay from '../errorDisplay'
+import { Helmet } from 'react-helmet'
 
 const RegisterPage = () => {
     const [username, setUsername] = useState('')
@@ -45,6 +46,9 @@ const RegisterPage = () => {
 
     return(
         <form className="register-page" onSubmit={handleRegister}>
+            <Helmet>
+                <title>Register</title>
+            </Helmet>
             <h2 className="heading">Create an Account</h2>
             <small className={`no-error ${error ? 'error': 'no-error'}`}>{error}</small>
             <div className="form-control">

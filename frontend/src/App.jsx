@@ -15,7 +15,6 @@ import PrivateRoutes from "./useAuth"
 
 const App = ()=> {
     const [updatedUsers, setUpdatedUsers] = useState([])
-    //const [chats, setChats] = useState([]);
     let [onlineUsers, setOnlineUsers] = useState([])
 
     const onSelectUsername = (data)=> {
@@ -102,24 +101,41 @@ const App = ()=> {
         const handleUsers = (users) => {
             //Add self property to each user
             if(updatedUsers.length === 0){
-                users.forEach((user) => {
-                    setUpdatedUsers(prevUsers => {
-                        const updatedUsers = [...prevUsers];
-                        user.self = user._id === socket.userID;
-                        user.online = onlineUsers.some(onlineUser => onlineUser.userID === user._id)
-                        initReactiveProperties(user);
-                        updatedUsers.push(user);
+                // users.forEach((user) => {
+                //     setUpdatedUsers(prevUsers => {
+                //         const updatedUsers = [...prevUsers];
+                //         user.self = user._id === socket.userID;
+                //         user.online = onlineUsers.some(onlineUser => onlineUser.userID === user._id)
+                //         initReactiveProperties(user);
+                //         updatedUsers.push(user);
     
-                        updatedUsers.sort((a, b) => {
-                            if (a.self) return -1;
-                            if (b.self) return 1;
-                            if (a.username < b.username) return -1;
-                            return a.username > b.username ? 1 : 0;
-                        });
+                //         updatedUsers.sort((a, b) => {
+                //             if (a.self) return -1;
+                //             if (b.self) return 1;
+                //             if (a.username < b.username) return -1;
+                //             return a.username > b.username ? 1 : 0;
+                //         });
     
-                        return updatedUsers;
-                    });
+                //         return updatedUsers;
+                //     });
+                // });
+                // console.log(users)
+                const newUsers = users.map((user) => {
+                    const newUser = initReactiveProperties(user);
+                    newUser.self = user._id === socket.userID;
+                    newUser.online = onlineUsers.some(onlineUser => onlineUser.userID === user._id);
+                    return newUser;
                 });
+
+                newUsers.sort((a, b) => {
+                    if (a.self) return -1;
+                    if (b.self) return 1;
+                    if (a.username < b.username) return -1;
+                    return a.username > b.username ? 1 : 0;
+                });
+
+                setUpdatedUsers(newUsers);
+                console.log(newUsers);
             }
         }
 

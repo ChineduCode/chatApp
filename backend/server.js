@@ -82,7 +82,6 @@ io.use( async (socket, next)=> {
 let onlineUsers = []
 
 io.on('connection', async (socket)=> {
-
     try {
         
         socket.emit('session', {

@@ -19,7 +19,7 @@ const Header = ({chats}) => {
     return(
         <header className="header">
             <div className="top">
-                <div className="logo">WhatsApp</div>
+                <div className="logo">ChatApp</div>
                 <div className="camera-menu-container">
                     <AiOutlineCamera size={25} className='camera-icon' />
                     <HeaderMenu />
