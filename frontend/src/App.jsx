@@ -25,8 +25,11 @@ const App = ()=> {
     }
 
     useEffect(()=> {
-        const userID = localStorage.getItem("userID");
-        const username = localStorage.getItem("username");
+        const user = localStorage.getItem("user");
+        const userData = JSON.parse(user)
+        const userID = userData?.userID
+        const username = userData?.username
+
         if (userID && username) {
             socket.auth = { userID, username };
             socket.connect();
@@ -36,8 +39,9 @@ const App = ()=> {
     useEffect(()=> {
         const handleSession = ({ userID, username })=> {
             socket.auth = { userID, username }
-            localStorage.setItem("userID", userID)
-            localStorage.setItem("username", username)
+            const user = {userID, username}
+            const userData = JSON.stringify(user)
+            localStorage.setItem("user", userData)
             socket.userID = userID
             socket.username = username
         }
@@ -135,7 +139,6 @@ const App = ()=> {
                 });
 
                 setUpdatedUsers(newUsers);
-                console.log(newUsers);
             }
         }
 
@@ -172,7 +175,7 @@ const App = ()=> {
 
     },[setOnlineUsers])
 
-
+ 
     return(
         <>
            <Router>

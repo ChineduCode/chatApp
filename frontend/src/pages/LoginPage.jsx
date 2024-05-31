@@ -3,15 +3,20 @@ import { useNavigate, Link } from 'react-router-dom'
 import errorDisplay from '../errorDisplay'
 import { Helmet } from 'react-helmet'
 
-const LoginPage = ({ socket, onSelectUsername }) => {
+const LoginPage = ({ onSelectUsername }) => {
     const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
     const [error, setError] = useState(null)
 
     const navigate = useNavigate()
 
     useEffect(()=> {
-        const loggedIn = !!(localStorage.getItem('userID') && localStorage.getItem('username'))
-        if(loggedIn){
+        const user = localStorage.getItem('user')
+        const userData = JSON.parse(user)
+        const userID = userData?.userID
+        const username = userData?.username
+        //const loggedIn = !!(localStorage.getItem('userID') && localStorage.getItem('username'))
+        if(userID && username){
             navigate('/chats')
         }
     })
@@ -24,20 +29,20 @@ const LoginPage = ({ socket, onSelectUsername }) => {
             const response = await fetch(`${process.env.REACT_APP_SERVER_URL}/api/users/login`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'Application/json'
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({username})
+                body: JSON.stringify({username, password})
             })
 
             const data = await response.json()
             if(response.ok){
                 onSelectUsername(data)
                 setUsername('')
+                setPassword('')
                 navigate('/chats')
 
             }else{
                 await errorDisplay(data.message, setError)
-                console.log(data.message)
             }
         
         }catch(error){
@@ -62,6 +67,17 @@ const LoginPage = ({ socket, onSelectUsername }) => {
                     className="username" 
                     value={username}
                     onChange={(e)=> setUsername(e.target.value)}
+                    required
+                />
+            </div>
+            <div className="form-control">
+                <label htmlFor="password">Password:</label>
+                <input 
+                    type="password" 
+                    name="password" 
+                    className="password" 
+                    value={password}
+                    onChange={(e)=> setPassword(e.target.value)}
                     required
                 />
             </div>

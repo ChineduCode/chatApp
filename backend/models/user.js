@@ -14,11 +14,6 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         require: true
-    },
-    userID: {
-        type: String,// Assuming socket.id is a string
-        require: true,
-        unique: true
     }
 },{
     timestamps: true

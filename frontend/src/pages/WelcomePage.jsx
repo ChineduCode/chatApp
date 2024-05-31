@@ -6,8 +6,12 @@ const WelcomePage = () => {
     const navigate = useNavigate()
 
     useEffect(()=> {
-        const loggedIn = !!(localStorage.getItem('userID') && localStorage.getItem('username'))
-        if(loggedIn){
+        const user = localStorage.getItem('user')
+        const userData = JSON.parse(user)
+        const userID = userData?.userID
+        const username = userData?.username
+        //const loggedIn = !!(localStorage.getItem('userID') && localStorage.getItem('username'))
+        if(userID && username){
             navigate('/chats')
         }
     })
