@@ -102,6 +102,19 @@ io.on('connection', async (socket)=> {
             
             socket.emit("chats", chats)
         })
+
+        // socket.on("chat opened", async (id)=> {
+        //     const chat = await Chat.findById(id)
+        //     const participant = chat.participants.find(participant => participant._id !== socket.userID)
+        //     const message = await Message.findByIdAndUpdate(chat.lastMessage, 
+        //         {status: 'seen'},
+        //         {new: true}
+        //     )
+
+        //     const status = message.status
+        //     socket.to(participant).to(socket.userID).emit("chat opened", status);
+        //     //socket.emit("chat opened", status)
+        // })
         
         let users = await User.find({}, {__v: 0, password: 0, createdAt: 0, updatedAt: 0})
         socket.emit('users', users)
@@ -135,11 +148,39 @@ io.on('connection', async (socket)=> {
             
             chat.lastMessage = newMessage._id,
             chat.lastUpdated = newMessage.timestamp
-            //console.log(chat)
             
             await chat.save()
-            
+
+            const chats = await Chat.find({participants: socket.userID})
+            .populate({
+                path: 'lastMessage',
+                populate: { path: 'from to', select: 'username' }
+            })
+            .populate('participants', 'username')
+            .lean()
+
+            const participant = chat.participants.find(participant => participant._id.toString() !== socket.userID)
+            //console.log(participant._id.toString())
+            socket.to(participant._id.toString()).to(socket.userID).emit("new chat", chats);
         });
+
+        // socket.on('new chat', async (to)=> {
+        //     const from = socket.userID
+ 
+        //     let chat = await Chat.findOne({
+        //         participants: { $all: [from, to] }
+        //     })
+        //     .populate({
+        //         path: 'lastMessage',
+        //         populate: { path: 'from to', select: 'username' }
+        //     })
+        //     .populate('participants', 'username')
+
+        //     // const participant = chat.participants.find(participant => participant._id.toString() !== socket.userID)
+        //     // console.log(participant.id)
+        //     // socket.to(participant.id).to(socket.userID).emit("new chat", chat);
+        //     console.log(chat)
+        // })
         
         socket.on("getMessages", async ()=> {
             const messages = await Message.find({

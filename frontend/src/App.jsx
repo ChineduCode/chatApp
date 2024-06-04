@@ -53,34 +53,6 @@ const App = ()=> {
         }
     },[])
 
-    // useEffect(()=> {
-    //     const handleChats = (chats)=> {
-    //         const userID = socket.userID
-    //         const processedChats = chats.map(chat => {
-    //             const { lastMessage, lastUpdated } = chat;
-    //             //const otherParticipant = participants.find(participant => participant._id !== userID);
-    //             const isSentByCurrentUser = lastMessage.from._id === userID;
-    
-    //             return {
-    //                 content: lastMessage.content,
-    //                 username: isSentByCurrentUser ? lastMessage.to.username : lastMessage.from.username,
-    //                 lastUpdated
-    //             };
-    //         });
-    
-    //         setChats(processedChats);
-    //     }
-
-    //     // Emit the event to get chats
-    //     socket.emit('getChats');
-    //     socket.on('chats', handleChats)
-
-    //     return ()=> {
-    //         socket.off('chats', handleChats)
-    //     }
-
-    // },[setChats])
-
     useEffect(()=> {
         const handleOnlineUsers = (users)=> {
             setOnlineUsers(users);
@@ -105,25 +77,6 @@ const App = ()=> {
         const handleUsers = (users) => {
             //Add self property to each user
             if(updatedUsers.length === 0){
-                // users.forEach((user) => {
-                //     setUpdatedUsers(prevUsers => {
-                //         const updatedUsers = [...prevUsers];
-                //         user.self = user._id === socket.userID;
-                //         user.online = onlineUsers.some(onlineUser => onlineUser.userID === user._id)
-                //         initReactiveProperties(user);
-                //         updatedUsers.push(user);
-    
-                //         updatedUsers.sort((a, b) => {
-                //             if (a.self) return -1;
-                //             if (b.self) return 1;
-                //             if (a.username < b.username) return -1;
-                //             return a.username > b.username ? 1 : 0;
-                //         });
-    
-                //         return updatedUsers;
-                //     });
-                // });
-                // console.log(users)
                 const newUsers = users.map((user) => {
                     const newUser = initReactiveProperties(user);
                     newUser.self = user._id === socket.userID;
@@ -157,11 +110,13 @@ const App = ()=> {
             socket.on("online users", (users) => {
                 setOnlineUsers(users);
             });
+            //console.log('Window on focus')
         };
 
         // Tab closed
         const handleBlur = () => {
             socket.emit("offline")  
+            //console.log('Window on blur')
         };
 
         // Track if the user changes the tab to determine when they are online
@@ -174,6 +129,11 @@ const App = ()=> {
         };
 
     },[setOnlineUsers])
+
+
+    // socket.on('new chat', (chat)=> {
+    //     console.log('new chat added')
+    // })
 
  
     return(

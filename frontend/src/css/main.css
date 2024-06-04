@@ -317,6 +317,9 @@ footer .active-page .icon svg {
   margin-left: 5px;
   font-size: 14px;
 }
+.chats-page .chats .chat .profile-pics-last-message-container .participant_and_last-message .status_last-message-container .message-seen {
+  color: hsl(0, 0%, 0%);
+}
 .chats-page .chats .chat .time-num-of-messages {
   display: flex;
   flex-direction: column;
