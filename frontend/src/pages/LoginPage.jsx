@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import errorDisplay from '../errorDisplay'
 import { Helmet } from 'react-helmet'
+import { FaRegEye } from "react-icons/fa6";
+import { FaRegEyeSlash } from "react-icons/fa6";
 
 const LoginPage = ({ onSelectUsername }) => {
     const [username, setUsername] = useState('')
