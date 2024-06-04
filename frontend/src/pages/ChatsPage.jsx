@@ -11,7 +11,7 @@ import { Helmet } from 'react-helmet'
 
 const ChatsPage = ({ socket }) => {
     const [chats, setChats] = useState([])
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const [seen, setSeen] = useState(false)
     
     useEffect(() => {
@@ -37,9 +37,9 @@ const ChatsPage = ({ socket }) => {
         // Emit the event to get chats
         socket.emit('getChats');
         socket.on('chats', handleChats);
+        setLoading(false)
         
         return () => {
-            setLoading(false)
             socket.off('chats', handleChats);
         };
     }, [socket, setChats]);
