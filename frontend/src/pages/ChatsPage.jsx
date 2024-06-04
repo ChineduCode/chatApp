@@ -45,7 +45,7 @@ const ChatsPage = ({ socket }) => {
     }, [socket, setChats]);
   
     useEffect(()=> {
-        socket.on('new chat', (chats)=> {
+        const handleNewChat = (chats)=> {
             const userID = socket.userID
             const processedChats = chats.map(chat => {
                 const { lastMessage, lastUpdated } = chat;
@@ -61,10 +61,12 @@ const ChatsPage = ({ socket }) => {
             });
     
             setChats(processedChats);
-        })
+        }
+
+        socket.on('new chat', handleNewChat)
 
         return ()=> {
-            socket.off('new chat')
+            socket.off('new chat', handleNewChat)
         }
     },[socket, setChats])
 
