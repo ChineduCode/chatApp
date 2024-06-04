@@ -15,7 +15,7 @@ const ChatsPage = ({ socket }) => {
     const [seen, setSeen] = useState(false)
     
     useEffect(() => {
-        //setLoading(true)
+        setLoading(true)
         const handleChats = (chats)=> {
             const userID = socket.userID
             const processedChats = chats.map(chat => {
