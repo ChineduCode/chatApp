@@ -82,7 +82,6 @@ io.use( async (socket, next)=> {
 let onlineUsers = []
 
 io.on('connection', async (socket)=> {
-    console.log('user connected', socket.username)
     try {
         
         socket.emit('session', {
@@ -92,7 +91,7 @@ io.on('connection', async (socket)=> {
     
         socket.join(socket.userID)
 
-        socket.on("getChats", async ()=> {
+        socket.on("getChats", async (to)=> {
             const chats = await Chat.find({participants: socket.userID})
             .populate({
                 path: 'lastMessage',
@@ -101,7 +100,12 @@ io.on('connection', async (socket)=> {
             .populate('participants', 'username')
             .lean()
             
+            // if(to){
+            //     socket.to(to).to(socket.userID).emit('chats', chats)
+            // }
+            
             socket.emit("chats", chats)
+
         })
 
         // socket.on("chat opened", async (id)=> {
@@ -151,18 +155,14 @@ io.on('connection', async (socket)=> {
             chat.lastUpdated = newMessage.timestamp
             
             await chat.save()
+            // await chat.populate({
+            //     path: 'lastMessage',
+            //     populate: { path: 'from to', select: 'username' }
+            // })
 
-            const chats = await Chat.find({participants: socket.userID})
-            .populate({
-                path: 'lastMessage',
-                populate: { path: 'from to', select: 'username' }
-            })
-            .populate('participants', 'username')
-            .lean()
-
-            const participant = chat.participants.find(participant => participant._id.toString() !== socket.userID)
-            //console.log(participant._id.toString())
-            socket.to(participant._id.toString()).to(socket.userID).emit("new chat", chats);
+            // const participant = chat.participants.find(participant => participant._id.toString() !== socket.userID)
+            // //console.log(participant._id.toString())
+            // socket.to(participant._id.toString()).to(socket.userID).emit("new chat", chat);
         });
 
         // socket.on('new chat', async (to)=> {

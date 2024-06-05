@@ -192,6 +192,18 @@ footer{
         }
     }
 
+    .form-control-password{
+        position: relative;
+        svg{
+            position: absolute;
+            top: 55%;
+            bottom: 50%;
+            right: 4px;
+            cursor: pointer;
+            color: hsl(0, 0%, 50%);
+        }
+    }
+
     button {
         display: inline-block;
         background-color: #25D366;

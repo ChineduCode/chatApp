@@ -9,6 +9,7 @@ const LoginPage = ({ onSelectUsername }) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState(null)
+    const [passwordShown, setPasswordShown] = useState(false)
 
     const navigate = useNavigate()
 
@@ -17,7 +18,7 @@ const LoginPage = ({ onSelectUsername }) => {
         const userData = JSON.parse(user)
         const userID = userData?.userID
         const username = userData?.username
-        //const loggedIn = !!(localStorage.getItem('userID') && localStorage.getItem('username'))
+
         if(userID && username){
             navigate('/chats')
         }
@@ -72,16 +73,19 @@ const LoginPage = ({ onSelectUsername }) => {
                     required
                 />
             </div>
-            <div className="form-control">
+            <div className="form-control form-control-password">
                 <label htmlFor="password">Password:</label>
                 <input 
-                    type="password" 
+                    type={`${passwordShown ? 'text' : 'password'}`}
                     name="password" 
                     className="password" 
                     value={password}
                     onChange={(e)=> setPassword(e.target.value)}
                     required
                 />
+
+                {passwordShown && <FaRegEye onClick={()=> setPasswordShown(false)}/>}
+                {!passwordShown && <FaRegEyeSlash onClick={()=> setPasswordShown(true)}/>}
             </div>
 
             <button type="submit">Login</button>

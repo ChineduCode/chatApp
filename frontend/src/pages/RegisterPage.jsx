@@ -2,12 +2,14 @@ import { useNavigate, Link } from 'react-router-dom'
 import { useState } from 'react'
 import errorDisplay from '../errorDisplay'
 import { Helmet } from 'react-helmet'
+import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa6'
 
 const RegisterPage = () => {
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState(null)
+    const [passwordShown, setPasswordShown] = useState(false)
 
     const navigate = useNavigate()
     
@@ -73,16 +75,19 @@ const RegisterPage = () => {
                     required
                 />
             </div>
-            <div className="form-control">
+            <div className="form-control form-control-password">
                 <label htmlFor="password">Password:</label>
                 <input 
-                    type="password" 
+                    type={`${passwordShown ? 'text' : 'password'}`}
                     name="password" 
                     className="password" 
                     value={password}
                     onChange={(e)=> setPassword(e.target.value)}
                     required
                 />
+
+                {passwordShown && <FaRegEye onClick={()=> setPasswordShown(false)}/>}
+                {!passwordShown && <FaRegEyeSlash onClick={()=> setPasswordShown(true)}/>}
             </div>
 
             <button type="submit">Create Account</button>

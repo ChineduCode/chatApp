@@ -181,6 +181,17 @@ footer .active-page .icon svg {
   border-radius: 4px;
   font-family: "Arial", sans-serif;
 }
+.register-page .form-control-password, .login-page .form-control-password {
+  position: relative;
+}
+.register-page .form-control-password svg, .login-page .form-control-password svg {
+  position: absolute;
+  top: 55%;
+  bottom: 50%;
+  right: 4px;
+  cursor: pointer;
+  color: hsl(0, 0%, 50%);
+}
 .register-page button, .login-page button {
   display: inline-block;
   background-color: #25D366;

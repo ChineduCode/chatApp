@@ -99,7 +99,7 @@ const ChatApp = ({socket, users}) => {
             setTextMessage('');
             setTextareaActive(false);
 
-            socket.emit('new chat', (selectedUser._id))
+            socket.emit('getChats')
         }
     };
 

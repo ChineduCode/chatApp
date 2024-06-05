@@ -43,32 +43,6 @@ const ChatsPage = ({ socket }) => {
             socket.off('chats', handleChats);
         };
     }, [socket, setChats]);
-  
-    useEffect(()=> {
-        const handleNewChat = (chats)=> {
-            const userID = socket.userID
-            const processedChats = chats.map(chat => {
-                const { lastMessage, lastUpdated } = chat;
-                //const otherParticipant = participants.find(participant => participant._id !== userID);
-                const isSentByCurrentUser = lastMessage.from._id === userID;
-    
-                return {
-                    content: lastMessage.content,
-                    username: isSentByCurrentUser ? lastMessage.to.username : lastMessage.from.username,
-                    lastUpdated,
-                    id: chat._id
-                };
-            });
-    
-            setChats(processedChats);
-        }
-
-        socket.on('new chat', handleNewChat)
-
-        return ()=> {
-            socket.off('new chat', handleNewChat)
-        }
-    },[socket, setChats])
 
     const handleChatOpen = (id)=> {
         socket.emit('chat opened', id)
